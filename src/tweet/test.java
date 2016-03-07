@@ -20,5 +20,6 @@ public class test {
 	    for (Status status : result.getTweets()) {
 	        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
 	    }
+	    System.out.println("Magic Successfull");
 	}
 }
