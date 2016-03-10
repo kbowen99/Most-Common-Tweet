@@ -22,27 +22,33 @@ public class test {
 		p("Spamming Now");
 		spamConsole();
 		p("Spam Complete");
-		String tmp = user + " First Tweet:" + statuses.get(statuses.size() - 1).getText();
-		sendTweet(((tmp.length() > 140) ? tmp.substring(0,140) : tmp));
+		sendTweet(user + " First Tweet:" + statuses.get(statuses.size() - 1).getText());
 	}
 	
+	/**
+	 * Writes all statuses in the arraylist 'statuses' to the console
+	 */
 	public void spamConsole(){
 		for (Status s : statuses)
 			p(s.getText());
 	}
 	
+	/**
+	 * Posts a Tweet on your twitter
+	 * Automagically shortens tweet to 140 char
+	 * @param s String to Tweet
+	 */
 	public void sendTweet(String s){
 		try {
-			twitter.updateStatus(s);
+			twitter.updateStatus(((s.length() > 140) ? s.substring(0,140) : s));
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void p(Object P){
-		System.out.println(P);
-	}
-	
+
+	/**
+	 * Loads all tweets for a user (uses the user variable)
+	 */
 	private void loadTweets(){
 		p("Magic Finding");
 		int pageno = 1;
@@ -61,5 +67,14 @@ public class test {
 		}
 		p(statuses.size() + " Magics Found");
 	}
+	
+	/**
+	 * Prints out to console (is much easier to type)
+	 * @param P Object to print
+	 */
+	private void p(Object P){
+		System.out.println(P);
+	}
+	
 	
 }
