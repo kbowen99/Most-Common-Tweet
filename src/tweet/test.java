@@ -1,5 +1,7 @@
 package tweet;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,17 +14,19 @@ import twitter4j.TwitterFactory;
 public class test {
 	
 	ArrayList<Status> statuses = new ArrayList<>();
+	ArrayList<String> commonWords = new ArrayList<>();
 	HashMap<String, Integer> hmap = new HashMap<>();
 	Twitter twitter = new TwitterFactory().getInstance();
 	String user;
 	
 	public test(String user){
 		this.user = user;
-		loadTweets();
-		p("Spamming Now");
-		spamConsole();
-		p("Spam Complete");
-		sendTweet(user + " First Tweet:" + statuses.get(statuses.size() - 1).getText());
+		loadFile();
+//		loadTweets();
+//		p("Spamming Now");
+//		spamConsole();
+//		p("Spam Complete");
+//		sendTweet(user + " First Tweet:" + statuses.get(statuses.size() - 1).getText());
 	}
 	
 	/**
@@ -69,12 +73,25 @@ public class test {
 	}
 	
 	/**
+	 * Loads "commonWords.txt" from resources into the arraylist commonWords
+	 */
+	private void loadFile(){
+		try (BufferedReader br = new BufferedReader(new FileReader("Resources\\commonWords.txt"))){
+			String line = br.readLine();
+			while(line != null) {
+				commonWords.add(p(line).toString());
+				line = br.readLine();
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Prints out to console (is much easier to type)
 	 * @param P Object to print
 	 */
-	private void p(Object P){
-		System.out.println(P);
+	private Object p(Object P){
+		System.out.println(P); return P;
 	}
-	
-	
 }
