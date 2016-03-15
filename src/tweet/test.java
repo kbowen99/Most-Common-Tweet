@@ -14,6 +14,7 @@ import twitter4j.TwitterFactory;
 public class test {
 	
 	ArrayList<Status> statuses = new ArrayList<>();
+	ArrayList<String> stringStatus = new ArrayList<>();
 	ArrayList<String> commonWords = new ArrayList<>();
 	HashMap<String, Integer> hmap = new HashMap<>();
 	Twitter twitter = new TwitterFactory().getInstance();
@@ -22,19 +23,23 @@ public class test {
 	public test(String user){
 		this.user = user;
 		loadFile();
-//		loadTweets();
-//		p("Spamming Now");
-//		spamConsole();
-//		p("Spam Complete");
-//		sendTweet(user + " First Tweet:" + statuses.get(statuses.size() - 1).getText());
+		loadTweets();
+		p("Spamming Now");
+		spamConsole();
+		p("Spam Complete");
+		//sendTweet(user + " First Tweet:" + statuses.get(statuses.size() - 1).getText());
+		p("Scrubbing Tweets");
+		scrubTweets();
+		p("Spamming Cleaner Tweets");
+		spamConsole();
 	}
 	
 	/**
 	 * Writes all statuses in the arraylist 'statuses' to the console
 	 */
 	public void spamConsole(){
-		for (Status s : statuses)
-			p(s.getText());
+		for (String s : stringStatus)
+			p(s);
 	}
 	
 	/**
@@ -69,6 +74,9 @@ public class test {
 		    e.printStackTrace();
 		  }
 		}
+		for (Status s : statuses){
+			stringStatus.add(s.getText());
+		}
 		p(statuses.size() + " Magics Found");
 	}
 	
@@ -79,7 +87,7 @@ public class test {
 		try (BufferedReader br = new BufferedReader(new FileReader("Resources\\commonWords.txt"))){
 			String line = br.readLine();
 			while(line != null) {
-				commonWords.add(p(line).toString());
+				commonWords.add(line);
 				line = br.readLine();
 			}
 		}catch (Exception e){
@@ -87,6 +95,17 @@ public class test {
 		}
 	}
 	
+	/**
+	 * Scrubs all tweets in arraylist 'statuses' from words in the arraylist 'commonwords'
+	 * *Assumes file has been loaded
+	 */
+	private void scrubTweets(){
+		for (String s : stringStatus){
+			for (String w : commonWords){
+				s = s.replace(w, "");
+			}
+		}
+	}
 	/**
 	 * Prints out to console (is much easier to type)
 	 * @param P Object to print
