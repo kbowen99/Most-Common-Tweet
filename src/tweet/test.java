@@ -100,9 +100,9 @@ public class test {
 	 * *Assumes file has been loaded
 	 */
 	private void scrubTweets(){
-		for (String s : stringStatus){
-			for (String w : commonWords){
-				s = s.replace(w, "");
+		for (int s = 0; s < stringStatus.size(); s++){
+			for (int w = 0; w < commonWords.size(); w++){
+				 stringStatus.set(s, stringStatus.get(s).replace(commonWords.get(w), ""));
 			}
 		}
 	}
