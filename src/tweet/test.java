@@ -102,7 +102,9 @@ public class test {
 	private void scrubTweets(){
 		for (int s = 0; s < stringStatus.size(); s++){
 			for (int w = 0; w < commonWords.size(); w++){
-				 stringStatus.set(s, stringStatus.get(s).replace(commonWords.get(w), ""));
+				 stringStatus.set(s, stringStatus.get(s).toLowerCase().replace((" " + commonWords.get(w).toLowerCase() + " "), " "));
+				 if (w == 0)
+					 stringStatus.set(s, stringStatus.get(s).toLowerCase().replace((commonWords.get(w).toLowerCase() + " "), " "));
 			}
 		}
 	}
