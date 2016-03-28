@@ -63,7 +63,8 @@ public class test {
 	 */
 	private void loadTweets(){
 		p("Magic Finding");
-		int pageno = 1;
+		//Loads tweets using pagination
+		int pageno = 1; 
 		boolean complete = false;
 		while (!complete) {
 		  try {
@@ -74,11 +75,13 @@ public class test {
 		    	complete = true;
 		  }
 		  catch(TwitterException e) {
+			  //Hopefully not used
 		    e.printStackTrace();
 		  }
 		}
 		for (Status s : statuses){
-			stringStatus.add(s.getText());
+			//Converts and Adds statuses into string statuses
+			stringStatus.add( " " + s.getText());
 		}
 		p(statuses.size() + " Magics Found");
 	}
