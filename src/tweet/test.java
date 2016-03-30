@@ -2,6 +2,8 @@ package tweet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,8 @@ public class test {
 		p("Calculating Common Words");
 		//getCommonWords();
 		getCommonKWords();
+		p("Dumping Log File");
+		dumpLogFile();
 	}
 	
 	/**
@@ -197,6 +201,23 @@ public class test {
 	 * @param P Object to print
 	 */
 	private Object p(Object P){
-		System.out.println(P); return P;
+		System.out.println(P); logFile.add(P + ""); return P;
+	}
+	
+	/**
+	 * called at the end of code to dump the logFile array into a file
+	 */
+	private void dumpLogFile(){
+		try {
+			FileWriter writ;
+			writ = new FileWriter("log.txt");
+			for (String w : logFile)
+				writ.write(w + "\r\n");
+			writ.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
