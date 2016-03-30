@@ -23,7 +23,7 @@ public class KWord {
 	 * @param count Starting Count
 	 */
 	public KWord(String word, int count){
-		this.word = word.trim();
+		this.word = word.trim().toLowerCase();
 		this.count = count;
 	}
 	
@@ -32,7 +32,7 @@ public class KWord {
 	 * @param word Represented Word
 	 */
 	public KWord(String word){
-		this.word = word.trim();
+		this.word = word.trim().toLowerCase();
 		this.count = 1;
 	}
 	
@@ -73,5 +73,9 @@ public class KWord {
 	 */
 	public void increment(){
 		this.count++;
+	}
+	
+	public String toString(){
+		return "'" + this.word + "' Was Repeated " + this.count + " Times";
 	}
 }
