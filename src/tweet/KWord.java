@@ -5,7 +5,7 @@ package tweet;
  * is a better alternative to a hashmap
  * @author Kurtis Bowen
  */
-public class KWord {
+public class KWord implements Comparable<Object> {
 	
 	/**
 	 * the word represented by this object
@@ -75,7 +75,20 @@ public class KWord {
 		this.count++;
 	}
 	
+	/**
+	 * Creates a string summarizing the KWord
+	 */
 	public String toString(){
 		return "'" + this.word + "' Was Repeated " + this.count + " Times";
+	}
+	
+	/**
+	 * Used to Compare one KWord object to another KWord object based on its count.
+	 * Allows for AutoMagical Sorting of an arraylist of KWords using Collections.sort().
+	 * Is Definitely Magical
+	 */
+	@Override
+	public int compareTo(Object o) {
+		return this.count - ((KWord)o).getCount();
 	}
 }

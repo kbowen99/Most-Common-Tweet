@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -169,14 +171,14 @@ public class test {
 				} catch(Exception e) {}
 			}
 		}
-		
+		Collections.sort(words);
 		KWord maxCount = new KWord("NO WORDS");
 		for(KWord k : words){
 			p(k.toString());
 			if(k.getCount() > maxCount.getCount())
 				maxCount = k;
 		}
-		JOptionPane.showMessageDialog(null, p(this.user + " Said '" + maxCount.getWord() + "' " + maxCount.getCount() + " Times").toString());
+		JOptionPane.showMessageDialog(null, p(this.user + " said '" + maxCount.getWord() + "' " + maxCount.getCount() + " times with a maximum possible being " + statuses.size() + " times (" + (int)(((double)maxCount.getCount()/(double)statuses.size()) * 100)) + "%)".toString());
 	}
 	
 	/**
