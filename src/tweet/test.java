@@ -171,7 +171,7 @@ public class test {
 				} catch(Exception e) {}
 			}
 		}
-		Collections.sort(words);
+		Collections.sort(words); //Sorts the Code AUTOMAGICALLY
 		KWord maxCount = new KWord("NO WORDS");
 		for(KWord k : words){
 			p(k.toString());
