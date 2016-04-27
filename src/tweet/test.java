@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -178,7 +177,7 @@ public class test {
 			if(k.getCount() > maxCount.getCount())
 				maxCount = k;
 		}
-		JOptionPane.showMessageDialog(null, p(this.user + " said '" + maxCount.getWord() + "' " + maxCount.getCount() + " times with a maximum possible being " + statuses.size() + " times (" + (int)(((double)maxCount.getCount()/(double)statuses.size()) * 100)) + "%)".toString());
+		JOptionPane.showMessageDialog(null, p(this.user + " said '" + maxCount.getWord() + "' " + maxCount.getCount() + " times in " + statuses.size() + " Tweets (" + (int)(((double)maxCount.getCount()/(double)statuses.size()) * 100)) + "%)".toString());
 	}
 	
 	/**

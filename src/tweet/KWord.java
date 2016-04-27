@@ -5,7 +5,7 @@ package tweet;
  * is a better alternative to a hashmap
  * @author Kurtis Bowen
  */
-public class KWord implements Comparable<Object> {
+public class KWord implements Comparable<KWord> {
 	
 	/**
 	 * the word represented by this object
@@ -88,7 +88,7 @@ public class KWord implements Comparable<Object> {
 	 * Is Definitely Magical
 	 */
 	@Override
-	public int compareTo(Object o) {
-		return this.count - ((KWord)o).getCount();
+	public int compareTo(KWord o) {
+		return this.count - o.getCount();
 	}
 }
