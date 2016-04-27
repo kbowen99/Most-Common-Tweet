@@ -2,7 +2,9 @@ package tweet;
 
 import javax.swing.JOptionPane;
 
-
+import fiftyone.mobile.detection.Match;
+import fiftyone.mobile.detection.Provider;
+import fiftyone.mobile.detection.factories.StreamFactory;
 
 public class Main {
 
