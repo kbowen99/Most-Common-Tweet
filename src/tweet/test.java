@@ -1,9 +1,12 @@
 package tweet;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,8 +29,10 @@ public class test {
 	Twitter twitter = new TwitterFactory().getInstance();
 	String user;
 	boolean limited;
+	boolean youtube;
 	
-	public test(String user, boolean limitCount){
+	public test(String user, boolean limitCount, boolean youtubeify){
+		this.youtube = youtubeify;
 		this.limited = limitCount;
 		this.user = user;
 		loadFile();
@@ -117,6 +122,7 @@ public class test {
 	 */
 	private void scrubTweets(){
 		for (int s = 0; s < stringStatus.size(); s++){
+			youtubeRun(stringStatus.get(s));
 			for (int w = 0; w < commonWords.size(); w++){
 				stringStatus.set(s, stringStatus.get(s).replace("@", ""));
 				//stringStatus.set(s, stringStatus.get(s).replace("rt", ""));
@@ -197,6 +203,39 @@ public class test {
 		return findWord(list, Word);
 	}
 	
+	
+	/**
+	 * Checks and Opens if Youtube
+	 */
+	private void youtubeRun(String maybeLink){
+		if (youtube){
+			String tmpLink = "";
+			if (maybeLink.contains("https://youtu")){
+				tmpLink = maybeLink.substring(maybeLink.indexOf("https://youtu"));
+				tmpLink = tmpLink.substring(0, tmpLink.indexOf(" "));
+			} else if (maybeLink.contains("https://www.youtu")){
+				tmpLink = maybeLink.substring(maybeLink.indexOf("https://www.youtu"));
+				tmpLink = tmpLink.substring(0, tmpLink.indexOf(" "));
+			}
+			if (tmpLink != ""){
+				int confirm = JOptionPane.showConfirmDialog(null, ("Open '" + tmpLink + "' ?"));
+				if (confirm == JOptionPane.OK_OPTION){
+					try {
+						Desktop.getDesktop().browse(new URI("http://www.example.com"));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if (confirm == JOptionPane.CANCEL_OPTION)
+					youtube = false;
+			}
+		}
+	}
+	
 	/**
 	 * Prints out to console (is much easier to type)
 	 * @param P Object to print
@@ -221,4 +260,5 @@ public class test {
 		}
 
 	}
+
 }
