@@ -5,8 +5,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,8 +59,9 @@ public class test {
 	 * Writes all statuses in the arraylist 'statuses' to the console
 	 */
 	public void spamConsole(){
-		for (String s : stringStatus)
+		for (String s : stringStatus){
 			p(s);
+		}
 	}
 	
 	/**
@@ -97,6 +101,14 @@ public class test {
 		for (Status s : statuses){
 			//Converts and Adds statuses into string statuses
 			stringStatus.add( " " + s.getText());
+			//Does the current status contain a URL?
+			if (s.getURLEntities() != null){
+				try{
+					String URL = s.getURLEntities()[0].getExpandedURL();
+					p("URL: " + URL);
+					youtubeRun(URL);
+				} catch (Exception e) {}
+			}
 		}
 		p(statuses.size() + " Magics Found");
 	}
@@ -122,7 +134,7 @@ public class test {
 	 */
 	private void scrubTweets(){
 		for (int s = 0; s < stringStatus.size(); s++){
-			youtubeRun(stringStatus.get(s));
+			
 			for (int w = 0; w < commonWords.size(); w++){
 				stringStatus.set(s, stringStatus.get(s).replace("@", ""));
 				//stringStatus.set(s, stringStatus.get(s).replace("rt", ""));
@@ -208,20 +220,20 @@ public class test {
 	 * Checks and Opens if Youtube
 	 */
 	private void youtubeRun(String maybeLink){
+		//if (maybeLink.contains("t.co")){
+		//	maybeLink = expandURL(maybeLink);
+		//}
 		if (youtube){
 			String tmpLink = "";
-			if (maybeLink.contains("https://youtu")){
-				tmpLink = maybeLink.substring(maybeLink.indexOf("https://youtu"));
-				tmpLink = tmpLink.substring(0, tmpLink.indexOf(" "));
-			} else if (maybeLink.contains("https://www.youtu")){
-				tmpLink = maybeLink.substring(maybeLink.indexOf("https://www.youtu"));
-				tmpLink = tmpLink.substring(0, tmpLink.indexOf(" "));
+			if (maybeLink.contains("youtu")){
+				tmpLink = maybeLink.substring(maybeLink.indexOf("http"));
+				//tmpLink = tmpLink.substring(0, tmpLink.indexOf(" "));
 			}
 			if (tmpLink != ""){
-				int confirm = JOptionPane.showConfirmDialog(null, ("Open '" + tmpLink + "' ?"));
+				int confirm = JOptionPane.showConfirmDialog(null, ("Open '" + maybeLink + "' ?"));
 				if (confirm == JOptionPane.OK_OPTION){
 					try {
-						Desktop.getDesktop().browse(new URI("http://www.example.com"));
+						Desktop.getDesktop().browse(new URI(maybeLink));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -230,12 +242,35 @@ public class test {
 						e.printStackTrace();
 					}
 				}
-				if (confirm == JOptionPane.CANCEL_OPTION)
+				if (confirm == JOptionPane.CANCEL_OPTION) //Allows you to stop showing URLS
 					youtube = false;
 			}
 		}
 	}
-	
+
+	/**
+	 * In theory expands a URL
+	 * is deprecated and terrible, but left as an example of what not to do
+	 * @param url URL to unshorten
+	 * @return Longer URL
+	 */
+	@Deprecated
+    public String expandURL(String url) {
+        try {
+             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+             connection.setInstanceFollowRedirects(true);
+             connection.getInputStream().read();
+             p(connection.getURL());
+             p("STOP");
+        } catch (MalformedURLException e) {
+             e.printStackTrace();
+        } catch (IOException e) {
+             e.printStackTrace();
+        }
+
+        return "";
+   }
+    
 	/**
 	 * Prints out to console (is much easier to type)
 	 * @param P Object to print
